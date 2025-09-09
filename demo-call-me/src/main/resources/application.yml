@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: callme-service
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, metrics, info
+
+server:
+  port: 8085
