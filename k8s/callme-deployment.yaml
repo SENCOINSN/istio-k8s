@@ -1,16 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-call-me
+  name: demo-call-me-v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: demo-call-me
+      version: v1
   template:
     metadata:
       labels:
         app: demo-call-me
+        version: v1
     spec:
       containers:
         - name: demo-call-me
@@ -21,6 +23,33 @@ spec:
           env:
             - name: VERSION
               value: "v1"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-call-me-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-call-me
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: demo-call-me
+        version: v2
+    spec:
+      containers:
+        - name: callme-service
+          image: piomin/demo-call-me:latest
+          #imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8085
+          env:
+            - name: VERSION
+              value: "v2"
 
 ---
 apiVersion: v1
